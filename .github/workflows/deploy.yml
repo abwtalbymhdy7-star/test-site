@@ -1,0 +1,32 @@
+name: CI Deploy
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  deploy-test:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to TEST
+        run: |
+          echo "Deploying to TEST environment"
+          echo "Environment=TEST" > deploy.txt
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to PRODUCTION
+        run: |
+          echo "Deploying to PRODUCTION environment"
+          echo "Environment=PRODUCTION" > deploy.txt
